@@ -1,0 +1,22 @@
+FROM python:latest
+
+USER root
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y \
+    python \
+    python-dev \
+    libffi-dev \
+    python-pip
+
+COPY /orderForm /orderForm
+
+RUN pip install -r /orderForm/requirements.txt
+RUN pip install gunicorn
+RUN chmod +x /orderForm/unicorn.sh
+
+CMD ["orderForm/unicorn.sh"]
+
+#CMD ["python", "/orderForm/manage.py", "runserver", "0.0.0.0:8000"]
+
+#CMD ["gunicorn", "--threads 3", "-w 3", "-b 0.0.0.0:8000", "orderForm.wsgi:application"]

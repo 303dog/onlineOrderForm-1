@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_scripts %}
+    <script src="{% static 'js/others.js'%}"></script>
+    <script src="{% static 'js/hide_dropoff.js'%}"></script>
+{% endblock %}
+{% block extra_style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/surveyDeliveryAdress.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="col-sm-12 col-md-12 col-lg-12">
+    {% include 'title_label.html' %}
+    <div class="col-sm-12 col-md-offset-1 col-md-11 col-lg-offset-1 col-lg-11">
+        <h2>Final step payment options and delivery details</h2>
+        <br>
+    </div>
+    <br>
+     <form action="." method="post" class="col-sm-12 col-md-12 col-lg-12 form-flex">
+        {% csrf_token %}
+         <div class="col-sm-12 col-md-12 col-lg-offset-1 col-lg-2 magic">
+             <h3>Payment options</h3>
+                {{ payment_form.as_p }}
+             <br>
+         </div>
+         <div class="col-sm-12 col-md-12 col-lg-offset-1 col-lg-3 magic address">
+             <h3>Invoice Address</h3>
+             <input id="same" type="checkbox" name="same_address" value="same" onchange="same_addr_function()">
+             <b> Invoice and Delivery (same addr.)</b>
+             <br>
+             <br>
+                {{ invoice_address.as_p }}
+             {% if error %}
+                <h4 style="color:chocolate">{{ error }}</h4>
+             {% endif %}
+             <br>
+         </div>
+         <div class="delivery col-sm-12 col-md-12 col-lg-offset-1 col-lg-3 magic address">
+             <h3>Delivery Address</h3>
+                {{ delivery_form.as_p }}
+             <br>
+         </div>
+         <div class="col-sm-12 col-md-12 col-lg-offset-4 col-lg-offset-4 col-lg-3 orderbtn">
+             <a href="{% url model hash pk %}" class="btn btn-secondary btn-block">Back</a>
+             <input type="submit" value="Order" class="btn btn-primary btn-block" />
+         </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

@@ -1,0 +1,521 @@
+{% load staticfiles %}
+{% load extra_template_tags %}
+{% include 'basePdf.html' %}
+
+{% block extra_style %}
+    <style type="text/css">
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+        .main-td {
+            height: 20;
+            font-size: 12px;
+            margin: 0 0 0 10px;
+        }
+        .main-td-red {
+            height: 20;
+            font-size: 12px;
+            margin: 0 0 0 10px;
+            color: red;
+        }
+        .footer-td {
+            height: 50;
+            font-size: 12px;
+            color: grey;
+        }
+        th {
+            margin: 0 0 0 -60px;
+            height: 24;
+            font-size: 12px;
+        }
+        .main-title {
+            margin: 0 0 0 100px;
+        }
+        h1 {
+            color: blue;
+        }
+    </style>
+{% endblock %}
+<div>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <img src="{{ base_url }}new_logo_2.png" alt="logo" height="120px"></p>
+    <p class="main-title" style="color:blue; font-size: 18px;">
+        <b>Input Acknowledgment for a Vertex Lite Collar order</b>
+    </p>
+    <p style="font-size: 12px;">
+        Created at: <b> {{ object.created_at }} </b><br>
+        Process number: <b> {{ object.operation_Number }} </b><br>
+        <b>Contact Person: </b>{{customer_name}} - {{ customer_mail }}<br>
+        You will receive a confimation of order from COMPANY Foobar for this order within the next days.
+    </p>
+    <h3>Customer number: <b>{{ object.contacts_faktura_id }}</b></h3>
+    <h1>Invoice and Delivery information</h1>
+    <table class="table">
+        <tr>
+           <td class="main-td">Invoice Address</td>
+            <td class="main-td">Delivery Address</td>
+        </tr>
+        <tr>
+            <td class="main-td">Organisation Name: <b>{{ object.customer_invoice_address.organisation_name }}</b></td>
+            {% if object.same_addr %}
+                <td class="main-td">Organisation Name: <b>{{ object.customer_invoice_address.organisation_name }}</b></td>
+            {% else %}
+                <td class="main-td">Organisation Name: <b>{{ object.delivery_addresse.delivery_organisation_name }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td class="main-td">Address: <b>{{ object.customer_invoice_address.complete_addresse }}</b></td>
+            {% if object.same_addr %}
+                <td class="main-td">Address: <b>{{ object.customer_invoice_address.complete_addresse }}</b></td>
+            {% else %}
+                <td class="main-td">Address: <b>{{ object.delivery_addresse.delivery_complete_addresse }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td class="main-td">Zip Code: <b>{{ object.customer_invoice_address.zip_code }}</b></td>
+            {% if object.same_addr %}
+                <td class="main-td">Zip Code: <b>{{ object.customer_invoice_address.zip_code }}</b></td>
+            {% else %}
+                <td class="main-td">Zip: <b>{{ object.delivery_addresse.delivery_zip_code }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td class="main-td">City: <b>{{ object.customer_invoice_address.city }}</b></td>
+            {% if object.same_addr %}
+                <td class="main-td">City: <b>{{ object.customer_invoice_address.city }}</b></td>
+            {% else %}
+                <td class="main-td">City: <b>{{ object.delivery_addresse.delivery_city }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td class="main-td">Country: <b>{{ object.customer_invoice_address.country }}</b></td>
+            {% if object.same_addr %}
+            <td class="main-td">Country: <b>{{ object.customer_invoice_address.country }}</b></td>
+            {% else %}
+            <td class="main-td">Country: <b>{{ object.delivery_addresse.delivery_country }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td class="main-td">Contact Person: <b>{{ object.customer_invoice_address.contact_person }}</b></td>
+            {% if object.same_addr %}
+                <td class="main-td">Contact Person: <b>{{ object.customer_invoice_address.contact_person }}</b></td>
+            {% else %}
+                <td class="main-td">Contact Person: <b>{{ object.delivery_addresse.delivery_contact_person }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td class="main-td">E-mail: <b>{{ object.customer_invoice_address.email_addresse }}</b></td>
+            {% if object.same_addr %}
+                <td class="main-td">E-mail: <b>{{ object.customer_invoice_address.email_addresse }}</b></td>
+            {% else %}
+                <td class="main-td">E-Mail: <b>{{ object.delivery_addresse.delivery_email_addresse }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td class="main-td">Telephone: <b>{{ object.customer_invoice_address.telephone_nr }}</b></td>
+            {% if object.same_addr %}
+                <td class="main-td">Telephone: <b>{{ object.customer_invoice_address.telephone_nr }}</b></td>
+            {% else %}
+                <td class="main-td">Telephone: <b>{{ object.delivery_addresse.delivery_telephone_nr }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td><br></td>
+            <td><br></td>
+        </tr>
+        <tr>
+            <td class="main-td">Payment Option: <b> {{ object.payment_option }} </b></td>
+            {% if less_than_12_weeks %}
+                <td class="main-td-red ">Delivery time: <b>{{ object.delivery_time }}</b></td>
+            {% else %}
+                <td class="main-td">Delivery time: <b>{{ object.delivery_time }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td class="main-td">PO/order number: <b> {{ object.order_no }} </b></td>
+            {% if object.vat_ein_number %}
+                <td>VAT/EIN number: <b>{{ object.vat_ein_number }}</b></td>
+            {% endif %}
+        </tr>
+    </table>
+    <h1>1. Composition of the collar:</h1>
+    <table class="table" style="border: 1px solid black;">
+        <tr>
+            <td class="main-td" >Animal species: <b> {{ object.animal_species }} </b></td>
+            <td class="main-td">Belt shape: <b>
+                {% if object.belt_shape %}
+                    {{ object.belt_shape }}
+                {% else %}
+                    not specified
+                {% endif %}
+                </b>
+            </td>
+        </tr>
+    </table>
+    <table class="table" style="border: 1px solid black;">
+        <tr>
+            <td class="main-td"><b>{{ object.battery_size|find_and_replace:' | ' }} </b> - Battery size</td>
+            <td class="main-td">Belt width: <b>
+                {% if object.belt_width %}
+                    {{ object.belt_width }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+        </tr>
+        <tr>
+            <td class="main-td"><b>{{ object.number_of_collars|find_and_replace:' | ' }}</b> - No of collars</td>
+            <td class="main-td">Belt thickness: <b>
+                {% if object.belt_thickness %}
+                    {{ object.belt_thickness }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+        </tr>
+        <tr>
+            <td class="main-td"><b>{{ object.nom_collar_circumference|find_and_replace:' | ' }} </b> - Collar circumference</td>
+            <td class="main-td">Belt edge: <b>
+                {% if  object.belt_edge %}
+                    {{ object.belt_edge }}
+                {% else %}
+                    not specified
+                {% endif %}
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td class="main-td">Other color: <b>
+                {% if object.other_color %}
+                    {{ object.other_color }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b>
+            </td>
+            <td class="main-td">Belt color: <b>
+                {% if object.belt_colour %}
+                    {{ object.belt_colour }}
+                {% else %}
+                    black - standard
+                {% endif %}
+            </b></td>
+        </tr>
+        <tr>
+            <td class="main-td">Label plates: <b>
+                {% if object.belt_labeling %}
+                    Yes
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+            <td class="main-td">Labeling instructions: <b>
+                {% if object.belt_labeling_instructions %}
+                    {{ object.belt_labeling_instructions }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b>
+            </td>
+        </tr>
+        <tr>
+            <td class="main-td">Belt marking: <b>
+                {% if object.belt_plates %}
+                    Yes
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+            <td class="main-td">Marking instructions: <b>
+                {% if object.belt_plates_instructions %}
+                    {{ object.belt_plates_instructions }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+        </tr>
+        <tr>
+            <td class="main-td">Reflective stripes: <b>
+                {% if object.reflective_stripes %}
+                    Yes
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+        </tr>
+    </table>
+    <p>_________________________________________________________________________________________________________________________________</p>
+    <table>
+        <tr>
+            {% if object.inc_or_gmbh == 'gmbh' %}
+                <td class="footer-td">COMPANY Foobar GmbH<br>
+                    Geschaeftsfuehrer: Foo Bar, Bar Foo<br>
+                    Sitz der Gesellschaft: Berlin<br>
+                    Amtsgericht Charlottenburg XXX 00000
+                </td>
+            {% else %}
+                <td class="footer-td">COMPANY Foobar Inc<br>
+                    1234 WayRoad Drive, Suite C<br>
+                    Town, XY 12345-6789<br>
+                    USA
+                </td>
+            {% endif %}
+        </tr>
+    </table>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>2. Programming of the collar</h1>
+    <table class="table" style="border: 1px solid black;">
+        <tr>
+            <td class="main-td">Mortality sensor delay time: <b>
+                {% if object.mortality_sensor %}
+                    {{ object.mortality_sensor }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+            <td class="main-td"></td>
+        </tr>
+        <tr>
+            <td class="main-td">Notification e-mail: <b>
+                {% if object.notification_mail %}
+                    {{ object.notification_mail }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+            <td class="main-td">Notification SMS: <b>
+                {% if object.notification_sms %}
+                    {{ object.notification_sms }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+        </tr>
+        <tr>
+            <td class="main-td">Timezone: <b>
+                {% if object.utc_lmt %}
+                    {{ object.utc_lmt|upper }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+            <td class="main-td">UTC correction: <b>
+                {% if object.utc_correction %}
+                    {{ object.utc_correction }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+        </tr>
+        <tr>
+            <td class="main-td">GPS schedule: <b>
+                {% if object.gps_schedule %}
+                    {{ object.gps_schedule|upper }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+            <td class="main-td">VHF beacon schedule: <b>
+                {% if object.vhf_beacon_schedule %}
+                    {{ object.vhf_beacon_schedule }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+        </tr>
+        <tr>
+            <td class="main-td">ID-Tag: <b>
+                {% if object.id_tag %}
+                    {{ object.id_tag }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+            <td class="main-td"></td>
+        </tr>
+    </table>
+    <br>
+    <h1>3. Collar Communication</h1>
+    <table class="table" style="border: 1px solid black;">
+        <tr>
+            <td class="main-td">GSM: <b>{{ object.gsm }}</b></td>
+            <td class="main-td">Store on board: <b>{{ object.store_on_board }}</b></td>
+        </tr>
+        <tr>
+            <td class="main-td">GLOBALSTAR: <b>{{ object.globalstar }}</b></td>
+            <td class="main-td">IRIDIUM: <b>{{ object.iridium }}</b></td>
+        </tr>
+        <tr>
+            {% if object.iridium_num_of_fixes_gps %}
+                <td class="main-td">IRIDIUM amount of GPS positions: <b>
+                    {% if object.iridium_num_of_fixes_gps %}
+                        {{ object.iridium_num_of_fixes_gps }}
+                    {% else %}
+                        not specified
+                    {% endif %}
+                </b></td>
+                <td class="main-td">IRIDIUM Contract type: <b>{{ object.iridium_contract_type }}</b></td>
+            {% else %}
+                <td class="main-td">---</td>
+                <td class="main-td">---</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td class="main-td">Airtime fee contact name: <b>
+                {% if object.contact_name_airtime_fee %}
+                    {{ object.contact_name_airtime_fee }}</b></td>
+                {% else %}
+                    not specified
+                {% endif %}
+            <td class="main-td">Airtime fee contact e-mail: <b>
+                {% if object.contact_mail_airtime_fee %}
+                    {{ object.contact_mail_airtime_fee }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+        </tr>
+        <tr>
+            {% if object.airtime_contract %}
+                <td class="main-td">Uploaded an airtime fee contract: <b>True</b></td>
+            {% else %}
+                <td class="main-td">Uploaded an airtime fee contract: <b>False</b></td>
+            {% endif %}
+            <td class="main-td">Groundstation No.:
+            {% if object.groundstation_number %}
+                <b>{{ object.groundstation_number }}</b>
+            {% else %}
+                not specified
+            {% endif %}
+        </td>
+        </tr>
+    </table>
+    <br>
+    <h1>4. Drop Off options</h1>
+    <table class="table" style="border: 1px solid black;">
+        <tr>
+            <td class="main-td">Internal Drop Off: <b>{% if object.internal_dropoff %}
+                    {{ object.internal_dropoff_controll }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+            <td class="main-td">External Drop Off: <b>{% if object.external_dropoff %}
+                    {{ object.external_dropoff_controll }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+            {% if object.cotton_layers %}
+                <td class="main-td">Cotton spacer: <b>{{ object.cotton_layers }}</b></td>
+            {% else %}
+                <td class="main-td">Cotton spacer: <b>not specified</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td class="main-td">I. Drop Off RELATIVE mode: <b>
+                {% if object.internal_dropoff_real_time %}
+                    {{ object.internal_dropoff_real_time }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+            <td class="main-td">E. Drop Off ABSOLUTE mode: <b>
+                {% if object.external_dropoff_abs_time %}
+                    {{ object.external_dropoff_abs_time }}</b></td>
+                {% else %}
+                    not specified
+                {% endif %}
+        </tr>
+        <tr>
+            <td class="main-td">E. Drop Off RELATIVE mode: <b>
+                {% if object.external_dropoff_real_time %}
+                    {{ object.external_dropoff_real_time }}
+                {% else %}
+                    not specified
+                {% endif %}
+            </b></td>
+            <td class="main-td">E. Drop Off ABSOLUTE mode: <b>
+                {% if object.external_dropoff_abs_time %}
+                    {{ object.external_dropoff_abs_time }}</b></td>
+                {% else %}
+                    not specified
+                {% endif %}
+        </tr>
+    </table>
+    <br>
+    <p style="font-size: 12px;">Further Instructions: <span>
+        {% if object.comment %}
+            <b>{{ object.comment }}</b>
+        {% else %}
+            not specified
+        {% endif %}
+    </span></p>
+    <p style="font-size: 12px;">VHF beacon frequencies: <b>
+        {% if object.vhf_beacon_frequency %}
+            {{ object.vhf_beacon_frequency }}
+        {% else %}
+            not specified
+        {% endif %}
+    </b></p>
+    <p style="font-size: 12px;">Telephone no:: <b>
+            {% if object.gsm_customer_sim_telephone_no %}
+                {{ object.gsm_customer_sim_telephone_no }}
+            {% else %}
+                not specified cause you are using a VECTRONIC SIM
+            {% endif %}
+        </b></p>
+    <p style="font-size: 12px;">Sim pins: <b>
+            {% if object.gsm_customer_sim_pin %}
+                {{ object.gsm_customer_sim_pin }}
+            {% else %}
+                not specified cause you are using a VECTRONIC SIM
+            {% endif %}
+        </b></p>
+    <p style="font-size: 12px; margin: 0 0 {{ space }}em;">Sim puks: <b>
+            {% if object.gsm_customer_sim_puk %}
+                {{ object.gsm_customer_sim_puk }}
+            {% else %}
+                not specified cause you are using a VECTRONIC SIM
+            {% endif %}
+        </b></p>
+</div>
+<div>
+    <p>_________________________________________________________________________________________________________________________________</p>
+    <table>
+        <tr>
+            {% if object.inc_or_gmbh == 'gmbh' %}
+                <td class="footer-td">COMPANY Foobar GmbH<br>
+                    Geschaeftsfuehrer: Foo Bar, Bar Foo<br>
+                    Sitz der Gesellschaft: Berlin<br>
+                    Amtsgericht Charlottenburg XXX 00000
+                </td>
+            {% else %}
+                <td class="footer-td">COMPANY Foobar Inc<br>
+                    1234 WayRoad Drive, Suite C<br>
+                    Town, XY 12345-6789<br>
+                    USA
+                </td>
+            {% endif %}
+        </tr>
+    </table>
+    <br>
+</div>
+</body>
+</html>

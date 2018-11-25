@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-sm-12 col-md-12 col-lg-12">
+    <h3 style="margin-left:20%">Please tell us your Invoice Address and optional your delivery Address</h3>
+    <br>
+     <form action="." method="post">
+        {% csrf_token %}
+         <div class="col-md-offset-2 col-lg-offset-2 col-md-3 col-lg-3">
+             <input type="checkbox" name="same_address" value="same"> <b> Invoice and Delivery (same addr.) </b>
+             <h3>Invoice Address</h3>
+                {{ invoice_address.as_p }}
+             {% if error %}
+                <h4 style="color:chocolate">{{ error }}</h4>
+             {% endif %}
+             <br>
+             <input type="submit" value="Order" class="btn btn-primary" />
+         </div>
+         <div class="col-md-offset-1 col-lg-offset-1 col-lg-3 col-md-3">
+             <br>
+             <h3>Delivery Address</h3>
+                {{ delivery_form.as_p }}
+             <br>
+         </div>
+    </form>
+</div>
+{% endblock %}

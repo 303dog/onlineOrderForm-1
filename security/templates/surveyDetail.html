@@ -1,0 +1,89 @@
+{% extends 'base.html'%}
+{% block content %}
+<div style="margin-left:30%">
+    <h1>Survey order information</h1>
+</div>
+<div class="col-md-12 col-lg-12">
+    <div class="col-md-offset-1 col-md-3 col-lg-offset-1 col-lg-3">
+            <h3>Order Information</h3>
+            <ul>
+                <li>Payment option: <b> {{ object.payment_option }} </b></li>
+                {% if object.order_no %}
+                    <li>Order no: <b> {{ object.order_no }} </b></li>
+                {% endif %}
+                <li>Number of collars: <b> {{ object.number_of_collars }} </b></li>
+                <li>Animal species: <b> {{ object.animal_species }} </b></li>
+                <li>Battery size: <b> {{ object.battery_size }} </b></li>
+                <li>Belt shape: <b> {{ object.belt_shape }} </b></li>
+                <li>Nom. collar circumference: <b> {{ object.nom_collar_circumference }} </b></li>
+                <li>VHF beacon frequency: <b> {{ object.vhf_beacon_frequency }} </b></li>
+                <li>Mortality sensor: <b> {{ object.mortality_sensor }} </b></li>
+                {% if object.external_dropoff == True %}
+                    <li>External drop off: <b> {{ object.external_dropoff }} </b></li>
+                    <li>External drop off real time: <b> {{ object.external_dropoff_real_time }} </b></li>
+                    <li>External drop off abs time: <b> {{ object.external_dropoff_abs_time }} </b></li>
+                {% endif %}
+                <li>UTC/LMT: <b> {{ object.utc_lmt }} </b></li>
+                {% if object.utc_lmt == 'lmt' %}
+                    <li>UTC correction: <b> {{ object.utc_correction }} </b></li>
+                {% endif %}
+                <li>VHF beacon schedule: <b> {{ object.vhf_beacon_schedule }} </b></li>
+                <li></li>
+                <li>Globalstar: <b> {{ object.globalstar }} </b></li>
+                <li>Iridium: <b> {{ object.iridium }} </b></li>
+                {% if object.iridium == True %}
+                    <li>{{ object.iridium_num_of_fixes }}</li>
+                {% endif %}
+                <li>Contact name airtime fee: <b> {{ object.contact_name_airtime_fee }} </b></li>
+                <li>Contact mail airtime fee: <b> {{ object.contact_mail_airtime_fee }} </b></li>
+                <li>Notification mail: <b> {{ object.notification_mail }} </b></li>
+                <li>Notification sms: <b> {{ object.notification_sms }} </b></li>
+                <li></li>
+                <li>Belt width: <b> {{ object.belt_width }} </b></li>
+                <li>Belt thickness: <b> {{ object.belt_thickness }} </b></li>
+                <li>Belt edge: <b> {{ object.belt_edge }} </b></li>
+                <li>Belt colour: <b> {{ object.belt_colour }} </b></li>
+                <li>Belt labeling or plates: <b> {{ object.belt_labeling_plates }} </b></li>
+                <li>Belting instructions: <b> {{ object.belting_instructions }} </b></li>
+                <li>Cotton layers: {{ object.cotton_layers }}</li>
+                <li></li>
+                <li>Comments: <b>{{ object.comment }} </b></li>
+                <li></li>
+                <li>Created at: <b> {{ object.created_at }} </b></li>
+                <li>Order acceptet: <b> {{ object.order_acceptet }} </b></li>
+                <br>
+            </ul>
+    </div>
+        <div class="col-md-3 col-lg-3">
+            <h3>Invoice Address</h3>
+            <li>Organisation name: <b> {{ object.invoice_addresse.organisation_name }} </b></li>
+            <li>Complete addresse: <b> {{ object.invoice_addresse.complete_addresse }} </b></li>
+            <li>Zip code: <b> {{ object.invoice_addresse.zip_code }} </b></li>
+            <li>City: <b> {{ object.invoice_addresse.city }} </b></li>
+            <li>Country: <b> {{ object.invoice_addresse.country }} </b></li>
+            <li>Contact person: <b> {{ object.invoice_addresse.contact_person }} </b></li>
+            <li>Email addresse: <b> {{ object.invoice_addresse.email_addresse }} </b></li>
+            <li>Telephone nr: <b> {{ object.invoice_addresse.telephone_nr }} </b></li>
+            <li>EU VAT code: <b> {{ object.invoice_addresse.eu_vat_code }} </b></li>
+        </div>
+        {% if object.delivery_addresse.complete_addresse %}
+            <div class="col-md-3 col-lg-3">
+                <h3>Detailed delivery address</h3>
+                <li>Organisation name: <b> {{ object.delivery_addresse.organisation_name }} </b></li>
+                <li>Complete addresse: <b> {{ object.delivery_addresse.complete_addresse }} </b></li>
+                <li>Zip code: <b> {{ object.delivery_addresse.zip_code }} </b></li>
+                <li>City: <b> {{ object.delivery_addresse.city }} </b></li>
+                <li>Country: <b> {{ object.delivery_addresse.country }} </b></li>
+                <li>Contact person: <b> {{ object.delivery_addresse.contact_person }} </b></li>
+                <li>Email addresse: <b> {{ object.delivery_addresse.email_addresse }} </b></li>
+                <li>Telephone nr: <b> {{ object.delivery_addresse.telephone_nr }} </b></li>
+            </div>
+        {% endif %}
+    </div>
+</div>
+    <div style="margin-left:10%">
+        <a href="{% url 'security:listsurveys'  %}" class="btn btn-secondary btn-sm">Back to list</a>
+        <a href="{{ object.get_sells_update_url }}" class="btn btn-secondary btn-sm">Edit</a>
+        <a href="{% url 'security:surveyorderpdf' object.pk %}" class="btn btn-info btn-sm">Pdf</a>
+    </div>
+{% endblock %}

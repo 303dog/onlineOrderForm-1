@@ -1,0 +1,235 @@
+{% load staticfiles %}
+{% load extra_template_tags %}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><!--This file was converted to xhtml by LibreOffice - see http://cgit.freedesktop.org/libreoffice/core/tree/filter/source/xslt for the code.-->
+<head profile="http://dublincore.org/documents/dcmi-terms/">
+    <meta http-equiv="Content-Type" content="application/pdf; charset=utf-8"/>
+    <title xml:lang="de">-Survey Order</title>
+    <meta name="DCTERMS.title" content="" xml:lang="en-US"/>
+    <style type="text/css">
+        td {
+            height: 20;
+            font-size: 12px;
+        }
+
+        th {
+            font-size: 12px;
+        }
+        .main-title {
+            margin: -45px 0 0 0;
+        }
+        caption {
+            color: blue;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <p class="main-title" style="color:blue; font-size: 20px;"><b>Your Order Information for a Survey Collar from {{ object.created_at|date }}</b>
+        <img src="{{ base_url }}logo120.png">
+    </p>
+    <p style="font-size: 18px;">
+        Payment option: <b> {{ object.payment_option }} </b>
+        {% if object.order_no %}
+            Order no: <b> {{ object.order_no }} </b>
+        {% endif %}
+    </p>
+    <table>
+        <tr>
+           <th>Invoice Address</th>
+            <th>Delivery Address</th>
+        </tr>
+        <tr>
+            <td>Organisation Name: <b>{{ object.customer_invoice_address.organisation_name }}</b></td>
+            {% if object.same_addr %}
+                <td>Organisation Name: <b>{{ object.customer_invoice_address.organisation_name }}</b></td>
+            {% else %}
+                <td>Organisation Name: <b>{{ object.delivery_addresse.delivery_organisation_name }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>Adress: <b>{{ object.customer_invoice_address.complete_addresse }}</b></td>
+            {% if object.same_addr %}
+                <td>Adress: <b>{{ object.customer_invoice_address.complete_addresse }}</b></td>
+            {% else %}
+                <td>Adress: <b>{{ object.delivery_addresse.delivery_complete_addresse }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>Zip: <b>{{ object.customer_invoice_address.zip_code }}</b></td>
+            {% if object.same_addr %}
+                <td>Zip: <b>{{ object.customer_invoice_address.zip_code }}</b></td>
+            {% else %}
+                <td>Zip: <b>{{ object.delivery_addresse.delivery_zip_code }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>City: <b>{{ object.customer_invoice_address.city }}</b></td>
+            {% if object.same_addr %}
+                <td>City: <b>{{ object.customer_invoice_address.city }}</b></td>
+            {% else %}
+                <td>City: <b>{{ object.delivery_addresse.delivery_city }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>Country: <b>{{ object.customer_invoice_address.country }}</b></td>
+            {% if object.same_addr %}
+            <td>Country: <b>{{ object.customer_invoice_address.country }}</b></td>
+            {% else %}
+            <td>Country: <b>{{ object.delivery_addresse.delivery_country }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>Contact Person: <b>{{ object.customer_invoice_address.contact_person }}</b></td>
+            {% if object.same_addr %}
+                <td>Contact Person: <b>{{ object.customer_invoice_address.contact_person }}</b></td>
+            {% else %}
+                <td>Contact Person: <b>{{ object.delivery_addresse.delivery_contact_person }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>E-mail: <b>{{ object.customer_invoice_address.email_addresse }}</b></td>
+            {% if object.same_addr %}
+                <td>E-mail: <b>{{ object.customer_invoice_address.email_addresse }}</b></td>
+            {% else %}
+                <td>E-Mail: <b>{{ object.delivery_addresse.delivery_email_addresse }}</b></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>Telephone: <b>{{ object.customer_invoice_address.telephone_nr }}</b></td>
+            {% if object.same_addr %}
+                <td>Telephone: <b>{{ object.customer_invoice_address.telephone_nr }}</b></td>
+            {% else %}
+                <td>Telephone: <b>{{ object.delivery_addresse.delivery_telephone_nr }}</b></td>
+            {% endif %}
+        </tr>
+    </table>
+    <br>
+    <table class="table" style="border: 1px solid black;">
+        <caption>1. Composition of the collar:</caption>
+        <tr>
+            <td>Animal species: <b> {{ object.animal_species }} </b></td>
+            <td>Number of collars: <b> {{ object.number_of_collars|find_and_replace:', ' }} </b></td>
+        </tr>
+        <tr>
+            <td>Battery size: <b> {{ object.battery_size|find_and_replace:', ' }} </b></td>
+            <td>Nom. collar circumference: <b> {{ object.nom_collar_circumference|find_and_replace:', ' }} </b></td>
+        </tr>
+        <tr>
+
+            <td>Belt shape: <b> {{ object.belt_shape }} </b></td>
+            <td>Belt width: <b> {{ object.belt_width }} </b></td>
+        </tr>
+        <tr>
+            <td>Belt thickness: <b> {{ object.belt_thickness }} </b></td>
+            <td>Belt edge: <b> {{ object.belt_edge }} </b></td>
+        </tr>
+        <tr>
+            {% if object.other_color %}
+                <td>Other color: <b>{{ object.other_color }}</b> </td>
+            {% else %}
+                <td>Belt color: <b> {{ object.belt_colour }} </b></td>
+            {% endif %}
+            <td>Reflective stripes: <b>{{ object.reflective_stripes }}</b></td>
+
+        </tr>
+        <tr>
+            <td>Belt labeling: <b> {{ object.belt_labeling }} </b></td>
+            <td>Labeling instructions: <b> {{ object.belting_instructions }} </b></td>
+        </tr>
+        <tr>
+            <td>Belt marking: <b> {{ object.belt_plates }} </b></td>
+            <td>Marking instructions: <b> {{ object.plates_instructions }} </b></td>
+        </tr>
+    </table>
+    <br>
+    <table class="table" style="border: 1px solid black;">
+        <caption>2. Programming of the collar</caption>
+        <tr>
+            <td>Mortality sensor delay time: <b> {{ object.mortality_sensor }} </b></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Notification e-mail: <b> {{ object.notification_mail }} </b></td>
+            <td>Notification SMS: <b> {{ object.notification_sms }} </b></td>
+        </tr>
+        <tr>
+            <td>Timezone: <b>{{ object.utc_lmt }}</b></td>
+            <td>UTC correction: <b> {{ object.utc_correction }} </b></td>
+        </tr>
+        <tr>
+            <td>GPS schedule: <b>{{ object.gps_schedule|upper }}</b></td>
+            <td>VHF beacon schedule: <b>{{ object.vhf_beacon_schedule }}</b></td>
+        </tr>
+        <tr>
+            <td>ID-Tag: {{ object.id_tag }}</td>
+            <td></td>
+        </tr>
+    </table>
+    <br>
+    <table class="table" style="border: 1px solid black;">
+        <caption>3. Collar Communication</caption>
+        <tr>
+            <td>GLOBALSTAR: <b>{{ object.globalstar }}</b></td>
+            <td>IRIDIUM: <b>{{ object.iridium }}</b></td>
+        </tr>
+        {% if object.iridium %}
+            <tr>
+                <td>nom of IRIDIUM communication: <b>{{ object.iridium_num_of_fixes_iridium }}</b></td>
+                <td>IRIDIUM amount of GPS positions: <b>{{ object.iridium_num_of_fixes_gps }}</b></td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td>Airtime fee contact name: <b>{{ object.contact_name_airtime_fee }}</b></td>
+            <td>Airtime fee contact e-mail: <b>contact_mail_airtime_fee</b></td>
+        </tr>
+        <tr>
+            {% if object.airtime_contract %}
+                <td>Uploaded an airtime fee contract: <b>True</b></td>
+            {% else %}
+                <td>Uploaded an airtime fee contract: <b>False</b></td>
+            {% endif %}
+            <td></td>
+        </tr>
+    </table>
+    <br>
+    <p>Page 1 of 2</p>
+    <br>
+    <table class="table" style="border: 1px solid black;">
+        <caption>4. Drop off options</caption>
+        <tr>
+            <td>External drop off: {{ object.external_dropoff }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>E. drop off RELATIVE mode: <b>{{ object.external_dropoff_real_time }}</b></td>
+            <td>E. drop off ABSOLUTE mode: <b>{{ object.external_dropoff_abs_time }}</b></td>
+        </tr>
+    </table>
+    <br>
+    <p>Further Instructions: <span>{{ object.comment }}</span></p>
+    <p>VHF beacon frequencies: <b> {{ object.vhf_beacon_frequency }} </b></p>
+</div>
+<div>
+    <p style="font-size: 10px">*****************************************<br>
+    COMPANY Foobar GmbH<br>
+    Carl-Scheele-Str. 12<br>
+    D-12489 Berlin<br>
+    Germany<br>
+    <br>
+    Geschaeftsfuehrer: Foo Bar, Bar Foo<br>
+    Sitz der Gesellschaft: Berlin<br>
+    Amtsgericht Charlottenburg XXX 00000<br>
+    Tel +49 (0)30 6789 4990<br>
+    Fax +49 (0)30 6789 5230<br>
+    www.vectronic-aerospace.com<br>
+    wildlife@vectronic-aerospace.com<br>
+    *****************************************</p>
+    <p style="margin: 0 0 0 55;">&copy; 2017 VECTRONIC-Aerospace</p>
+    <br>
+    <p>Page 2 of 2</p>
+</div>
+</body>
+</html>

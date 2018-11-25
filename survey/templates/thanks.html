@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <div class="col-md-12 col-lg-12">
+        {% include 'title_label.html' %}
+        <div class="col-md-offset-4 col-md-8 col-lg-offset-4 col-lg-8">
+            <h1>Thank you for your Order</h1>
+            <h3>Download your order as <a href="{% url 'survey:pdf' pk %}">pdf</a></h3>
+        </div>
+    </div>
+{% endblock %}

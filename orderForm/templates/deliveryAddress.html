@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block extra_style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/deliveryAddress.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="col-sm-12 col-md-12 col-lg-12">
+    {% include 'title_label.html' %}
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <h2 style="margin-left:28%; ">Final step payment options and delivery details</h2>
+        <br>
+    </div>
+    <br>
+     <form action="." method="post">
+        {% csrf_token %}
+         <div class="col-sm-12 col-md-offset-1 col-lg-offset-1 col-md-3 col-lg-2 magic">
+             <h3>Payment options</h3>
+                {{ payment_form.as_p }}
+             <br>
+         </div>
+         <div class="col-sm-12 col-md-offset-1 col-lg-offset-1 col-md-3 col-lg-3 magic">
+             <h3>Invoice Address</h3>
+             <input id="same" type="checkbox" name="same_address" value="same" onchange="same_addr_function()">
+             <b> Invoice and Delivery (same addr.)</b>
+             <br>
+             <br>
+                {{ invoice_address.as_p }}
+             {% if error %}
+                <h4 style="color:chocolate">{{ error }}</h4>
+             {% endif %}
+             <br>
+         </div>
+         <div class="delivery col-sm-12 col-md-offset-1 col-lg-offset-1 col-lg-3 col-md-3 magic">
+             <h3>Delivery Address</h3>
+                {{ delivery_form.as_p }}
+             <br>
+         </div>
+         <div class="col-sm-12 col-md-offset-4 col-md-3 col-lg-offset-4 col-lg-3 orderbtn">
+             <input type="submit" value="Order" class="btn btn-primary btn-block" />
+         </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+
+    $(document).ready(function(){
+        if($('#same').is(':checked')) {
+            $('.delivery').hide;
+        } else {
+            $('.delivery').show();
+        }
+    });
+
+    function same_addr_function() {
+        if($('.delivery').css('display') == 'none') {
+            $('.delivery').show();
+        } else {
+            $('.delivery').hide();
+        }
+    }
+
+    function viaPost_function() {
+        if($('#id_as_email').prop('checked') == true) {
+            $('#id_as_email').prop('checked', false);
+        }
+    }
+
+    function viaEmail_function() {
+        if($('#id_as_post').prop('checked') == true) {
+            $('#id_as_post').prop('checked', false);
+        }
+    }
+
+</script>
+{% endblock %}

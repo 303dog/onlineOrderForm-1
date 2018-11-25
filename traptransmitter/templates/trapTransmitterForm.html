@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block extra_scripts %}
+{% endblock %}
+{% block extra_style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="col-sm-12 col-md-12 col-lg-12">
+    {% include 'title_label.html' %}
+    <div class="col-sm-12 col-md-offset-1 col-lg-offset-1 col-md-11 col-lg-10">
+        <h2>TT3 Trap Transmitter online order</h2>
+        <a href="https://www.vectronic-aerospace.com/wp-content/uploads/2018/07/Flyer-TT3-Trap-Transmitter.pdf"
+           target="_blank" style="margin-left: 12em;">Flyer Trap Transmitter</a>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-offset-1 col-lg-4 magic">
+        <form action="." method="post" enctype="multipart/form-data" class="trap col-md-12 col-lg-12">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.name == 'vhf_beacon_frequency' %}
+                    <div class="form-group col-sm-12 col-lg-12 label-over-text">
+                {% elif field.name == 'notification_mail' %}
+                    <div class="form-group col-sm-11 col-md-12 col-lg-12 notification">
+                {% elif field.name == 'notification_sms' %}
+                    <div class="form-group col-sm-11 col-md-12 col-lg-12 notification">
+                {% elif field.name == 'gps_schedule' %}
+                    <div class="form-group col-md-12 col-lg-12 gps_schedule">
+                {% elif field.name == 'vhf_beacon_schedule' %}
+                    <div class="form-group col-md-12 col-lg-12 vhf_schedule">
+                {% elif field.name == 'globalstar' %}
+                    {% if com_type_ir %}
+                        <div class="form-group col-md-12 col-lg-12" style="display: none;">
+                    {% else %}
+                        <div class="form-group col-md-12 col-lg-12">
+                    {% endif %}
+                {% elif field.name == 'iridium' %}
+                    {% if com_type_gl %}
+                        <div class="form-group col-md-12 col-lg-12" style="display: none;">
+                    {% else %}
+                        <div class="form-group col-md-12 col-lg-12">
+                    {% endif %}
+                {% elif field.name == 'contact_name_airtime_fee' %}
+                    <div class="form-group col-sm-11 col-md-12 col-lg-12 notification">
+                {% elif field.name == 'contact_mail_airtime_fee' %}
+                    <div class="form-group col-sm-11 col-md-12 col-lg-12 notification_email">
+                {% elif field.name == 'comment' %}
+                    <div class="form-group col-md-12 col-lg-12 label-over-text">
+                {% else %}
+                    <div class="form-group col-md-12 col-lg-12">
+                {% endif %}
+                    {% if field.name == 'number_of_collars' %}
+                        <h3>1. Composition of the Trap Transmitter:</h3>
+                    <br>
+                    {% endif %}
+
+                    {% if com_type_gl %}
+                        {% if field.name == 'globalstar' %}
+                            <h3 class="info-tag">2. Trap Transmitter Communication</h3>
+                        {% endif %}
+                    {% else %}
+                        {% if field.name == 'iridium' %}
+                            <h3 class="info-tag">2. Trap Transmitter Communication</h3>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if field.name == 'vhf_beacon_frequency' %}
+                        <h3>3. Programming of the Trap Transmitter</h3>
+                    {% endif %}
+
+                    {% if field.name == 'comment' %}
+                        <h3>4. Place for further instructions</h3>
+                    {% endif %}
+
+                    {% if field.name == 'contact_name_airtime_fee' %}
+                        <h5 style="color: #555555;"><b>2.3 Contact for airtime fees:</b></h5>
+                    {% endif %}
+
+                    {% if field.name == 'notification_mail' %}
+                        <h5 style="color: #555555;"><b>2.4 Contact for status/alert message:</b></h5>
+                        <p style="color: #555555">Please specify e-mail address(es) and phone number(s) for mortality events.</p>
+                    {% endif %}
+
+                    <label class="col-form-label">{{ field.label_tag }}</label>
+
+                    {% for error in field.errors %}
+                        <p style="color:brown">{{ error }}</p>
+                    {% endfor %}
+                    {{ field }}
+                    <p> {{ field.help_text|safe }} </p>
+                </div>
+            {% endfor %}
+            <div class="form-group col-md-12 col-lg-12">
+                <input type="submit" value="continue" class="btn btn-primary btn-block" onclick="checkAmount" id="submit"/>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-12 col-lg-6">
+        {% include 'pics_tt3.html' %}
+    </div>
+    <div class="col-md-12 col-lg-12">
+        <br>
+        <br>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

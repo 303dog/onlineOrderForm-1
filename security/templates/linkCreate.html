@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <div class="container">
+        <h1>Create Link for customer</h1>
+        <br>
+        {% if link %}
+            <a href="mailto:{{ customerMail }}?subject=Vectronic-Wildlife%20order%20sheet&amp;body=http://localhost/{{ collarType|lower }}/{{ link }}.com">The link</a>
+        {% else %}
+            <form action=".", method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Create link" class="btn btn-primary btn-sm"/>
+                <a href="{% url 'collar:createOrderingPerson' %}" class="btn btn-success btn-sm">Create Ordering Person</a>
+            </form>
+        {% endif %}
+        </br>
+        <a href="{% url 'security:overview' %}" class="btn btn-info btn-sm">Back to overview</a>
+    </div>
+</div>
+{% endblock %}

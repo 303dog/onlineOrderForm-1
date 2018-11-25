@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        {{ delivery_addresse.organisation_name }}
+        <form action=".", method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Change" />
+        </form>
+        <a href="{% url 'security:listsurveys' %}">Back</a>
+    </div>
+{% endblock %}

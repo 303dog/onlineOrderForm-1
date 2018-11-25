@@ -1,0 +1,42 @@
+.magic {
+        border: 1px solid black;
+        box-shadow: 10px 10px 10px;
+        background-color: #EFEFFF;
+    }
+.orderbtn {
+    margin-top: 5%;
+}
+input[type='text'] {
+    float: right;
+}
+input[type='email'] {
+    float: right;
+}
+.emailOrPost {
+    float: right;
+    transform: scale(1.2)
+}
+@media screen and (min-width: 1400px) {
+    #id_payment_option {
+        margin-left: 25%;
+    }
+    input[type='text'] {
+            width: 50%;
+       }
+    input[type='email'] {
+            width: 50%;
+       }
+}
+@media screen and (min-width: 801px) {
+    input[type='text'] {
+            width: 30%;
+       }
+    input[type='email'] {
+            width: 30%;
+       }
+}
+@media screen and (max-width: 800px) {
+    #id_payment_option {
+        margin-left: 50%;
+    }
+}

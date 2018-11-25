@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block extra_scripts %}
+    <script src="{% static 'js/others.js' %}"></script>
+    <script src="{% static 'js/hide_dropoff.js' %}"></script>
+    <script src="{% static 'js/change_text_input_to_table.js' %}"></script>
+{% endblock %}
+{% block extra_style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="col-sm-12 col-md-12 col-lg-12">
+    {% include 'title_label.html' %}
+    <div class="col-sm-12 col-md-offset-1 col-lg-offset-2 col-md-11 col-lg-10">
+        <h2>Survey collar online order</h2>
+        <a href="https://www.vectronic-aerospace.com/wp-content/uploads/2016/04/Flyer_VERTEX%20Survey%20Iridium.pdf"
+           target="_blank" style="margin-left: 2.2em;">Flyer Survey Iridium</a> /
+        <a href="https://www.vectronic-aerospace.com/wp-content/uploads/2016/07/Flyer_Survey-Globalstar-Collar.pdf"
+           target="_blank">Flyer Survey Globalstar</a>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-offset-1 col-lg-4 magic">
+        <form action="." method="post" enctype="multipart/form-data" class="col-md-12 col-lg-12">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.name == 'utc_lmt' %}
+                    <div id='timezone' class="form-group col-md-12 col-lg-12" onchange="timezone_function()">
+                {% elif field.name == 'utc_correction' %}
+                    <div class="utc-correction tick-left form-group col-md-12 col-lg-12">
+                {% elif field.name == 'belt_labeling_instructions' %}
+                    <div class="tick-left form-group col-md-11 col-lg-11 label-over-text label_instructions">
+                {% elif field.name == 'belt_plates_instructions' %}
+                    <div class="tick-left form-group col-md-11 col-lg-11 label-over-text plate_instructions">
+                {% elif field.name == 'vhf_beacon_frequency' %}
+                    <div class="form-group col-sm-12 col-lg-12 label-over-text">
+                {% elif field.name == 'notification_mail' %}
+                    <div class="tick-left form-group col-sm-11 col-md-12 col-lg-12 notification">
+                {% elif field.name == 'notification_sms' %}
+                    <div class="tick-left form-group col-sm-11 col-md-12 col-lg-12 notification">
+                {% elif field.name == 'gps_schedule' %}
+                    <div class="form-group col-md-12 col-lg-12 gps_schedule">
+                {% elif field.name == 'vhf_beacon_schedule' %}
+                    <div class="form-group col-md-12 col-lg-12 vhf_schedule">
+                {% elif field.name == 'owm_gps_schedule' %}
+                    <div class="tick-left form-group col-md-8 col-lg-8 own_gps_schedule">
+                {% elif field.name == 'own_vhf_schedule' %}
+                    <div class="tick-left form-group col-md-8 col-lg-8 own_vhf_schedule">
+                {% elif field.name == 'globalstar' %}
+                    {% if com_type_ir %}
+                        <div class="form-group col-md-12 col-lg-12" style="display: none;">
+                    {% else %}
+                        <div class="form-group col-md-12 col-lg-12">
+                    {% endif %}
+                {% elif field.name == 'iridium' %}
+                    {% if com_type_gl %}
+                        <div class="form-group col-md-12 col-lg-12" style="display: none;">
+                    {% else %}
+                        <div class="form-group col-md-12 col-lg-12" onchange="iridium_function()">
+                    {% endif %}
+                {% elif field.name == 'iridium_num_of_fixes_gps' %}
+                    <div class="iridium tick-left form-group col-md-12 col-lg-12">
+                {% elif field.name == 'iridium_contract_type' %}
+                    <div class="iridium tick-left form-group col-md-12 col-lg-12">
+                {% elif field.name == 'contact_name_airtime_fee' %}
+                    <div class="tick-left form-group col-md-12 col-lg-12">
+                {% elif field.name == 'external_dropoff'%}
+                    <div class="form-group col-md-12 col-lg-12" onchange="dropoff_function()">
+                {% elif field.name == 'external_dropoff_controll'%}
+                    <div class="dropoff form-group col-md-12 col-lg-12">
+                {% elif field.name == 'external_dropoff_real_time' %}
+                    <div class="dropoff form-group col-md-12 col-lg-12">
+                {% elif field.name == 'external_dropoff_abs_time' %}
+                    <div class="dropoff form-group col-md-12 col-lg-12">
+                {% elif field.name == 'contact_mail_airtime_fee' %}
+                    <div class="tick-left form-group col-md-12 col-lg-12">
+                {% elif field.name == 'comment' %}
+                    <div class="form-group col-md-12 col-lg-12 label-over-text">
+                {% else %}
+                    <div class="form-group col-md-12 col-lg-12">
+                {% endif %}
+                    {% if field.name == 'animal_species' %}
+                        <h3>1. Composition of the collar:</h3>
+                    <br>
+                    {% endif %}
+                    {% if field.name == 'belt_shape' %}
+                    <label class="col-form-label">
+                        <label>1.2 Amount of collars, battery size and belt circumference</label>
+                    </label><p>In case you have an order with different belt colors, widths, thicknesses and shapes, please use the comment field at the bottom of this page.</p>
+                    {% if formset_error == 'error' %}
+                        <h4 style="color:chocolate">Please fill out at least one row</h4>
+                    {% endif %}
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Battery</th>
+                                <th>Quantity</th>
+                                <th>Belt circumference[cm] <br> <span>(Adjustability ± 10%)</span></th>
+                            </tr>
+                        </thead>
+                        {% for formset_field in formset %}
+                            <tr>
+                            {% for ff in formset_field %}
+                                <td>{{ ff }} </td>
+                            {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    {% endif %}
+
+                    {% if field.name == 'other_color' %}
+                        <p>Other colors are available by request, please specify:</p>
+                    {% endif %}
+
+                    {% if field.name == 'vhf_beacon_frequency' %}
+                        <h3>2. Programming of the collar</h3>
+                        <!--<table class="frequencies">-->
+
+                        <!--</table>-->
+                        <!--<p onclick="add_table_row()" class="btn btn-primary btn-sm">Add VHF beacon frequency:</p>-->
+                    {% endif %}
+                    {% if com_type_gl %}
+                        {% if field.name == 'globalstar' %}
+                            <h3 class="info-tag">3. Collar Communication</h3>
+                        {% endif %}
+                    {% else %}
+                        {% if field.name == 'iridium' %}
+                            <h3 class="info-tag">3. Collar Communication</h3>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if field.name == 'contact_name_airtime_fee' %}
+                        <p class="tick-right"><b>3.3. Airtime fee contract </b> <br>If you have not signed our
+                            airtime fee contract yet, please upload a completly filled out airtime fee contract.(<a href="
+                            {% url 'download' path='media' name='flyer' file='Terms_and_Conditions_GLOBALSTAR_and_Iridium_02_2017.doc' %}">
+                                Get a blank airtime fee contract</a> )
+                        </p>
+                    {% endif %}
+
+                    {% if field.name == 'external_dropoff' %}
+                        <h3>4. Drop Off options</h3>
+                    {% endif %}
+
+                    {% if field.name == 'external_dropoff_abs_time' %}
+                        <h4 class="or"> OR </h4>
+                        <h5 class="time_error" style="display: none; color: chocolate">
+                            Please state in the format<b> dd.mm.yyyy hh:mm:ss</b></h5>
+                    {% endif %}
+
+                    {% if field.name == 'comment' %}
+                        <h3>5. Place for further instructions</h3>
+                    {% endif %}
+
+                    {% if field.name == 'number_of_collars' %}
+                        <label class="col-form-label" hidden>{{ field.label_tag }}</label>
+                    {% elif field.name == 'battery_size' %}
+                        <label class="col-form-label" hidden>{{ field.label_tag }}</label>
+                    {% elif field.name == 'nom_collar_circumference' %}
+                        <label class="col-form-label" hidden>{{ field.label_tag }}</label>
+                    {% else %}
+                        <label class="col-form-label">{{ field.label_tag }}</label>
+                    {% endif %}
+                    {% for error in field.errors %}
+                    <p style="color:brown">{{ error }}</p>
+                    {% endfor %}
+                    {{ field }}
+                    <p> {{ field.help_text|safe }} </p>
+                </div>
+            {% endfor %}
+            <div class="form-group col-md-12 col-lg-12">
+                <input type="submit" value="continue" class="btn btn-primary btn-block" onclick="checkAmount" id="submit"/>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-12 col-lg-6">
+        {% include 'pics.html' %}
+    </div>
+    <div class="col-md-12 col-lg-12">
+        <br>
+        <br>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

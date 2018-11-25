@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+{% block content %}
+    <div>
+        <h1>List of Survey orders</h1>
+        <row>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Organisation</th>
+                        <th>Differing Shipping Address</th>
+                        <th>Country</th>
+                        <th>Num Collars</th>
+                        <th>Communication type</th>
+                        <th>Species</th>
+                        <th>Order acceptet</th>
+                        <th>Edit</th>
+                        <th>pdf</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for object in object_list %}
+                    <tr>
+                        <td> {{ object.created_at|date:"SHORT_DATE_FORMAT" }} </td>
+                        <td>{{ object.invoice_addresse.organisation_name }}</td>
+                        {% if object.delivery_addresse.complete_addresse %}
+                            <td>Yes</td>
+                        {% else %}
+                            <td>No</td>
+                        {% endif %}
+                        <td>{{ object.invoice_addresse.country }}</td>
+                        <td> {{ object.number_of_collars }} </td>
+                        {% if object.globalstar %}
+                        <td> {{ object.globalstar }} </td>
+                        {% else %}
+                        <td> {{ object.iridium }} </td>
+                        {% endif %}
+                        <td> {{ object.animal_species }} </td>
+                        <td> {{ object.order_acceptet }} </td>
+                        <td> <a href="{{ object.get_sells_detail_url }}">Edit</a> </td>
+                        <td> <a href="{% url 'security:surveyorderpdf' object.pk %}">Pdf</a> </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+        </row>
+        <td> <a href="{% url 'security:overview'  %}" class="btn btn-secondary">Back to overview</a> </td>
+    </div>
+{% endblock %}

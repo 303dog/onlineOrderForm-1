@@ -1,0 +1,14 @@
+<vGpsSchedule>
+  <vGpsRule startDate="2000-01-01" endDate="2018-11-16" period="P1DT0H0M0S" >
+    <sequence offset="P0DT0H0M0S" duration="P1DT0H0M0S" fixRate="P0DT2H30M0S" />
+  </vGpsRule>
+  <vGpsRule startDate="2018-11-16" endDate="2019-03-14" period="P0DT23H45M0S" >
+    <sequence offset="P0DT0H0M0S" duration="P0DT23H45M0S" fixRate="P0DT23H45M0S" />
+  </vGpsRule>
+  <vGpsRule startDate="2019-03-15" endDate="2019-11-15" period="P1DT0H0M0S" >
+    <sequence offset="P0DT0H0M0S" duration="P1DT0H0M0S" fixRate="P0DT2H30M0S" />
+  </vGpsRule>
+  <vGpsRule startDate="2019-11-16" endDate="2030-03-14" period="P0DT23H45M0S" >
+    <sequence offset="P0DT0H0M0S" duration="P0DT23H45M0S" fixRate="P0DT23H45M0S" />
+  </vGpsRule>
+</vGpsSchedule>
